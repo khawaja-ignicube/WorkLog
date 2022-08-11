@@ -1,0 +1,14 @@
+version: "3.9"
+   
+services:
+  web:
+    container_name:  Worklog_Container
+    build: .
+    image: worklog.image:tag
+    command: python manage.py runserver 0.0.0.0:9000
+    volumes:
+      - .:/code
+    ports:
+      - "9000:9000"
+
+

@@ -1,0 +1,147 @@
+.App {
+  background-color: white;
+}
+
+.Auth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 823px;
+}
+
+.Auth-form {
+  width: 720px;
+  height: 810px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 1px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Auth-form-content {
+  padding-top: 5%;
+  padding-left: 24%;
+  
+}
+
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+
+.nav{
+  background-color: black;
+  color: white;
+  height: 58px;
+  padding: 10px;
+}
+
+.title{
+  padding-left: 20px;
+}
+
+.footer {
+  padding: 10px;
+  padding-left: 40%;
+}
+
+.nav-left{
+  position: absolute;
+  left: 90%;
+}
+
+.log-btn{
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.sgn-btn {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.user{
+  position: absolute;
+  left: 47%
+}
+
+.logout{
+  position: absolute;
+  left: 93%
+}
+
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+.homeBar{
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 20px;
+  color: rgb(34, 34, 34);
+  font-weight: 700;
+  text-decoration: none;
+  border-color: black;
+  border-style: solid;
+  border-radius: 10px;
+  margin-left: 4%;
+  padding: 2px;
+}
+
+.homeAct{
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 20px;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  border-color: black;
+  border-style: solid;
+  border-radius: 10px;
+  margin-left: 4%;
+  padding: 2px;
+  background-color: black;
+}
+
+.homeData{
+  margin: 5%;
+  padding: 5%;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.workData {
+  margin: 3%;
+  padding: 4%;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.work{
+  height: 450px;
+  overflow-y: scroll;
+}
+
+.del-btn{
+  padding-left: 1px;
+}

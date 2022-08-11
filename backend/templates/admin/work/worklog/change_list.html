@@ -1,0 +1,12 @@
+<!--Upload CSV link on the worklog page-->
+
+{% extends "admin/change_list.html" %}
+{% load static %}
+{% block content %}
+
+    <!-- Redirect to csv_upload.html file -->
+    <a href="ImportCSV/">Import Work Log</a>
+    <br> <br>
+
+{{ block.super }}
+{% endblock %}
