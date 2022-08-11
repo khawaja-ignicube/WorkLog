@@ -100,7 +100,7 @@ function ManagerWorkU() {
             <div className="Auth-form-container">  
                 <div className="Auth-form ">
                     
-                    <div className="Auth-form-content">
+                    <div className="Auth-form-contentt">
                     
                         <NavLink className="homeBar" to = '/homeM'>Home</NavLink>
                         <NavLink className="homeBar" to = '/workA'>Add Work</NavLink>

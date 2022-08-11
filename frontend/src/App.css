@@ -22,8 +22,8 @@
 
 .Auth-form-content {
   padding-top: 5%;
-  padding-left: 24%;
-  
+  padding-left: 12%;
+  padding-right: 12%;
 }
 
 .Auth-form-title {
@@ -40,14 +40,14 @@ label {
   color: rgb(34, 34, 34);
 }
 
-.nav{
+.nav {
   background-color: black;
   color: white;
   height: 58px;
   padding: 10px;
 }
 
-.title{
+.title {
   padding-left: 20px;
 }
 
@@ -56,12 +56,12 @@ label {
   padding-left: 40%;
 }
 
-.nav-left{
+.nav-left {
   position: absolute;
   left: 90%;
 }
 
-.log-btn{
+.log-btn {
   color: white;
   text-align: center;
   text-decoration: none;
@@ -75,12 +75,12 @@ label {
   display: inline-block;
 }
 
-.user{
+.user {
   position: absolute;
   left: 47%
 }
 
-.logout{
+.logout {
   position: absolute;
   left: 93%
 }
@@ -94,7 +94,7 @@ label {
   color: green;
 }
 
-.homeBar{
+.homeBar {
   text-align: center;
   margin-bottom: 1em;
   font-size: 20px;
@@ -108,7 +108,7 @@ label {
   padding: 2px;
 }
 
-.homeAct{
+.homeAct {
   text-align: center;
   margin-bottom: 1em;
   font-size: 20px;
@@ -123,7 +123,7 @@ label {
   background-color: black;
 }
 
-.homeData{
+.homeData {
   margin: 5%;
   padding: 5%;
   border-style: solid;
@@ -137,11 +137,17 @@ label {
   border-radius: 10px;
 }
 
-.work{
+.work {
   height: 450px;
   overflow-y: scroll;
 }
 
-.del-btn{
+.del-btn {
   padding-left: 1px;
+}
+
+.Auth-form-contentt {
+  padding-top: 5%;
+  padding-left: 24%;
+
 }
