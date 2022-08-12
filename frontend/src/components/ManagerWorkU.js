@@ -43,7 +43,6 @@ function ManagerWorkU() {
                     return userID.work[0].employee
                 }))
 
-                console.log("Employee = ", employee)
 
                 if(employeeType!==""){
                     apiHit.get(`/Gwork/${employeeType}` , { headers: {"Authorization" : `Bearer ${getCookie("Token")}`} })
@@ -63,8 +62,8 @@ function ManagerWorkU() {
                         apiHit.post('/token/refresh/' , data)
                             .then ( (res) => {
                                 //console.log("New Access = ",res.data)
-                                document.cookie = `Token = ${res.data.access}`;
-                                document.cookie = `Refresh = ${res.data.refresh}`;
+                                document.cookie = `Token = ${res.data.access}; SameSite=Strict; Secure`;
+                                document.cookie = `Refresh = ${res.data.refresh}; SameSite=Strict; Secure`;
                                 console.log("Token Updated")
                                 showData()
                             })

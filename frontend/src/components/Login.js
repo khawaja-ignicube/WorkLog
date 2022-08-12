@@ -21,7 +21,7 @@ function Login (){
         if(username!=="" && password!==""){
             apiHit.post('/token/', data)
             .then( (res) => {
-                console.log("Token = ",res.data.access);
+                //console.log("Token = ",res.data.access);
             
                 if(res.data.access!==""){
                     setLogin("true");
@@ -30,8 +30,8 @@ function Login (){
                     const time = now.getTime();
                     const expireTime = time + 1000 * 22000;
                     now.setTime(expireTime);
-                    document.cookie = `Token = ${res.data.access} ;expires=${now.toUTCString()}`;
-                    document.cookie = `Refresh = ${res.data.refresh};expires=${now.toUTCString()}`;
+                    document.cookie = `Token = ${res.data.access} ;expires=${now.toUTCString()}; SameSite=Strict; Secure`;
+                    document.cookie = `Refresh = ${res.data.refresh};expires=${now.toUTCString()}; SameSite=Strict; Secure`;
 
                     apiHit.get('/manager/', { headers: {"Authorization" : `Bearer ${res.data.access}`} })
                     .then( () => {

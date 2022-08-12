@@ -51,8 +51,8 @@ function EmployeeWorkV() {
                         apiHit.post('/token/refresh/' , data)
                             .then ( (res) => {
                                 //console.log("New Access = ",res.data)
-                                document.cookie = `Token = ${res.data.access}`;
-                                document.cookie = `Refresh = ${res.data.refresh}`;
+                                document.cookie = `Token = ${res.data.access}; SameSite=Strict; Secure`;
+                                document.cookie = `Refresh = ${res.data.refresh}; SameSite=Strict; Secure`;
                                 console.log("Token Updated")
                                 showData()
                             })
