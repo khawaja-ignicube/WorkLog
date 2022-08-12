@@ -20,38 +20,39 @@ function Login (){
 
         if(username!=="" && password!==""){
             apiHit.post('/token/', data)
-                .then( (res) => {
-                    console.log("Token = ",res.data.access);
-                
-                    if(res.data.access!==""){
-                        setLogin("true");
+            .then( (res) => {
+                console.log("Token = ",res.data.access);
+            
+                if(res.data.access!==""){
+                    setLogin("true");
 
-                        const now = new Date();
-                        const time = now.getTime();
-                        const expireTime = time + 1000 * 22000;
-                        now.setTime(expireTime);
-                        document.cookie = `Token = ${res.data.access} ;expires=${now.toUTCString()}`;
-                        document.cookie = `Refresh = ${res.data.refresh};expires=${now.toUTCString()}`;
+                    const now = new Date();
+                    const time = now.getTime();
+                    const expireTime = time + 1000 * 22000;
+                    now.setTime(expireTime);
+                    document.cookie = `Token = ${res.data.access} ;expires=${now.toUTCString()}`;
+                    document.cookie = `Refresh = ${res.data.refresh};expires=${now.toUTCString()}`;
 
+                    apiHit.get('/manager/', { headers: {"Authorization" : `Bearer ${res.data.access}`} })
+                    .then( () => {
+                        console.log("Redirecting as Manager")
+                        navigate("/homeMD");
+                    })
 
-                        
-                        apiHit.get('/manager/', { headers: {"Authorization" : `Bearer ${res.data.access}`} })
-                        .then( () => {
-                            console.log("Redirecting as Manager")
-                            navigate("/homeM");
-                        })
-
-                        .catch( () => {
+                    .catch( (err) => {
+                        //console.log("Error = ",err.response.data.detail)
+                        if(err.response.data.detail==='You do not have permission to perform this action.'){    
                             console.log("Redirecting as Employee")
-                            navigate("/signup");
-                        })
+                            navigate("/homeED");
+                        }
+                    })
+                
                     
-                        
-                    }
+                }
             })
-                .catch((err) => {
-                    //console.log("catch err = ", err.message)
-                    setErrorMessage("Please enter the correct username/password")
+            .catch((err) => {
+                //console.log("catch err = ", err.message)
+                setErrorMessage("Please enter the correct username/password")
             })
         }
 

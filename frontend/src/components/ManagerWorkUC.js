@@ -1,5 +1,5 @@
 import DateTimePicker from 'react-datetime-picker';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button';
@@ -31,6 +31,7 @@ function Work(props){
 
     const handleCloseUpdate = () => {
         setShowUpdate(false);
+        setUpdMsg("");
     }
     const handleShowUpdate = () => {
         setShowUpdate(true);
@@ -42,6 +43,7 @@ function Work(props){
 
     const handleCloseDelete = () => {
         setShowDelete(false);
+        setDelMsg("");
     }
     const handleShowDelete = () => {
         setShowDelete(true);
@@ -70,18 +72,33 @@ function Work(props){
                 setUpdMsg("The Data is successfully Updates");
                 props.reload()
             })
+            .catch( (err) => {
+                try{
+                    //console.log("Msg = ",err.response.data)
+                    if (err.response.data.detail=== 'Given token not valid for any token type'){
+                        console.log("Token Issue")
+                        let data = {refresh: getCookie("Refresh")}
+                        //console.log("Access = ",getCookie("Refresh"))
+                        apiHit.post('/token/refresh/' , data)
+                            .then ( (res) => {
+                                //console.log("New Access = ",res.data)
+                                document.cookie = `Token = ${res.data.access}`;
+                                document.cookie = `Refresh = ${res.data.refresh}`;
+                                console.log("Token Updated")
+                            })
+                    }
+                }catch(e){ console.log("Token is OK")}
+            })
             
         }
         else{
             setErrorMsg("Please enter all the fields data")
         }
-        setUpdMsg("");
     }
 
 
 
     const DeleteData = () => {
-        setDelMsg("")
         apiHit.delete(`/Uwork/${props.workID}` ,{ headers: {"Authorization" : `Bearer ${getCookie("Token")}`} })
             .then( (res) => {
                 //console.log("Result = ",res.data)
@@ -90,6 +107,23 @@ function Work(props){
                 setTimeout(() => {  
                     props.reload()
                 }, 2000);
+            })
+            .catch( (err) => {
+                try{
+                    //console.log("Msg = ",err.response.data)
+                    if (err.response.data.detail=== 'Given token not valid for any token type'){
+                        console.log("Token Issue")
+                        let data = {refresh: getCookie("Refresh")}
+                        //console.log("Access = ",getCookie("Refresh"))
+                        apiHit.post('/token/refresh/' , data)
+                            .then ( (res) => {
+                                //console.log("New Access = ",res.data)
+                                document.cookie = `Token = ${res.data.access}`;
+                                document.cookie = `Refresh = ${res.data.refresh}`;
+                                console.log("Token Updated")
+                            })
+                    }
+                }catch(e){ console.log("Token is OK")}
             })
         
     }

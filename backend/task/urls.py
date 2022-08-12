@@ -20,7 +20,8 @@ urlpatterns = [
     path('api/manager/', views.ManagerView.as_view(), name = 'man'),
     path('api/employee/',views.EmployeeView.as_view(), name = 'emp'),
     
-    path('api/work/', views.WorkLogView.as_view(), name = 'work'),
+    path('api/work/', views.ManagerAddWorkView.as_view(), name='work'),
+    path('api/addWorkEmp/', views.EmployeeAddWorkView.as_view(), name='work'),
     path('api/workEmp/', views.WorkLogEmployee.as_view(), name='workCh'),
 
     path('api/managerEmp/', views.GetEmployeeManager.as_view(), name = 'manE'),

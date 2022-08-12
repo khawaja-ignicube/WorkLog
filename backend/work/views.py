@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
-from .models import Employee, Manager, MyUser, WorkLog
+from .models import Department, Employee, Manager, MyUser, WorkLog
 from .serializers import EmployeeSerializers, ManagerSerializers, WorkLogSerializers, EmployeeSerializersW, CreateUserSerializer
 
 
@@ -79,7 +79,7 @@ class EmployeeView(APIView):
 
 """If the current login user is manager then the user can access this view
    and the user can assigned the work to the employee"""
-class WorkLogView(generics.ListCreateAPIView):
+class ManagerAddWorkView(generics.ListCreateAPIView):
 
     permission_classes = [ManagerPermission]
     queryset = WorkLog.objects.all()
@@ -115,6 +115,57 @@ class WorkLogView(generics.ListCreateAPIView):
             
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+"""If the current login user is Employee then the user can add task"""
+class EmployeeAddWorkView(generics.ListCreateAPIView):
+
+    permission_classes = [EmployeePermission]
+    queryset = WorkLog.objects.all()
+    serializer_class = WorkLogSerializers
+
+    def create(self, request, *args, **kwargs):
+
+        from_mail = self.request.user.email
+        """print("Employee email = ",from_mail)"""
+
+        serializer = WorkLogSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            """Saving the model fields data in order to send this data to employee via email."""
+            id = serializer.data['employee']
+            #print("Emp id = ", id)
+            
+            emp_obj = Employee.objects.get(id=id)
+            #print("Emp Object = ", emp_obj)
+
+            dept_obj = Department.objects.get(name=emp_obj.department)
+            #print("Employee dept name = ", dept_obj)
+
+            manager_obj = Manager.objects.get(department=dept_obj)
+            #print("Manager obj = ", manager_obj)
+
+            user = MyUser.objects.get(id=manager_obj.id)
+            """print("Manager Email = ",user.email)"""
+
+            to_email = user.email
+
+            task_s = serializer.data['task_start']
+            task_e = serializer.data['task_end']
+            task_d = serializer.data['descp']
+            
+            mess = 'Task has been assign to you' + '\nTask start date = ' + task_s + \
+                '\nTask end date = ' + task_e + '\nTask Description = ' + task_d
+
+            #Sending the email by django-Q.So the django controller dont have to wait for email sent
+            async_task('django.core.mail.send_mail',
+                       'Work Log Task', mess, to_email, [from_mail])
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
     
 
 class WorkLogEmployee(ListAPIView):

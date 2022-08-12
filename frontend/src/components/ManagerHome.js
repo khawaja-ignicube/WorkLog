@@ -15,6 +15,7 @@ function ManagerHome() {
 
     const [errorDepartment, setErrorDepartment] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     let navigate = useNavigate();
 
@@ -64,25 +65,45 @@ function ManagerHome() {
     }
 
     const handleUpdate = () => {
+        setErrorDepartment("");
+        setSuccessMsg("");
+        setErrorMsg("");
         let data = {user:user, department: department, salary: salary, age:age}
 
-        apiHit.put(`/manager/` ,data ,{ headers: {"Authorization" : `Bearer ${getCookie("Token")}`} })
-            .then( (res) => {
-                console.log("Data updated...")
-                setSuccessMsg("Data is Successfully Updated...")
-            })
-            .catch( (err) => {
-                try{
-                        if (err.response.data.department[0]=== 'This field must be unique.'){
-                            console.log("Department Issue")
-                            setErrorDepartment("Manager is already exit this is department")
-                        }
-                }catch(e){ console.log("Department OK")}
-            })
+        if(salary!=="" && age!==""){
+            apiHit.put(`/manager/` ,data ,{ headers: {"Authorization" : `Bearer ${getCookie("Token")}`} })
+                .then( (res) => {
+                    console.log("Data updated...")
+                    setSuccessMsg("Data is Successfully Updated...")
+                })
+                .catch( (err) => {
+                    try{
+                            if (err.response.data.department[0]=== 'This field must be unique.'){
+                                console.log("Department Issue")
+                                setErrorDepartment("Manager is already exit this is department")
+                            }
+                    }catch(e){ console.log("Department OK")}
+
+                    try{
+                            if (err.response.data.salary[0]=== 'A valid integer is required.'){
+                                console.log("salary Issue")
+                                setErrorMsg("Please enter correct Salary")
+                            }
+                    }catch(e){ console.log("Salary OK")}
+                    
+                    try{
+                            if (err.response.data.age[0]=== 'A valid integer is required.'){
+                                console.log("Age Issue")
+                                setErrorMsg("Please enter correct age")
+                            }
+                    }catch(e){ console.log("Age OK")}
+                })
+        }
+
+        else{
+            setErrorMsg("Please enter all the fields data")
+        }
         
-            
-            setErrorDepartment("");
-            setSuccessMsg("");
     }
 
 
@@ -96,10 +117,9 @@ function ManagerHome() {
 
 
     useEffect(() => {
-        //console.log("Department Type useEffect = ", department);
+
         showData();
     },[]);
-
 
     return(
         <>
@@ -116,9 +136,9 @@ function ManagerHome() {
                     
                     <div className="Auth-form-contentt">
                     
-                        <NavLink className="homeAct" to = '/homeM'>Home</NavLink>
-                        <NavLink className="homeBar" to = '/workA'>Add Work</NavLink>
-                        <NavLink className="homeBar" to = '/workU'>Change Work</NavLink>   
+                        <NavLink className="homeAct" to = '/homeMD'>Home</NavLink>
+                        <NavLink className="homeBar" to = '/workMA'>Add Work</NavLink>
+                        <NavLink className="homeBar" to = '/workMU'>Change Work</NavLink>   
                     </div>
 
                     <br/>
@@ -160,6 +180,7 @@ function ManagerHome() {
 
                         <br/>
                         {successMsg && <div className="success"> {successMsg} </div>}
+                        {errorMsg && <div className="error"> {errorMsg} </div>}
 
                         <br/>
                         <button className="btn btn-dark" onClick={handleUpdate}>Update</button>

@@ -6,6 +6,10 @@ import ManagerHome from './components/ManagerHome';
 import ManagerWorkA from './components/ManagerWorkA';
 import ManagerWorkU from './components/ManagerWorkU';
 
+import EmployeeHome from "./components/EmployeeHome";
+import EmployeeWorkA from "./components/EmployeeWorkA";
+import EmployeeWorkV from "./components/EmployeeWorkV";
+
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import "./App.css"
@@ -19,9 +23,13 @@ function App() {
           <Route path="/" element = {<Login/>}/>
           <Route path="/signup" element = {<Signup/>}/>
           <Route path="/user" element = {<User/>}/>
-          <Route path="/homeM" element = {<ManagerHome/>}/>
-          <Route path="/workA" element = {<ManagerWorkA/>}/>
-          <Route path="/workU" element = {<ManagerWorkU/>}/>
+          <Route path="/homeMD" element = {<ManagerHome/>}/>
+          <Route path="/workMA" element = {<ManagerWorkA/>}/>
+          <Route path="/workMU" element = {<ManagerWorkU/>}/>
+
+          <Route path="/homeED" element = {<EmployeeHome/>}/>
+          <Route path="/workEA" element = {<EmployeeWorkA/>}/>
+          <Route path="/workEV" element = {<EmployeeWorkV/>}/>
           
           
         </Routes>
